@@ -1,12 +1,23 @@
-import React from 'react'
+import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
-const TodoItem = ({ item, navigation }) => {
-    return (
-        <TouchableOpacity onPress={() => navigation.navigate('Details', { text: item.text, description: item.description})}>
-          <Text style={styles.item}>{item.text}</Text>
-        </TouchableOpacity>
-    )
+const TodoItem = ({itemID, navigation}) => {
+  const itemToShow = useSelector(state =>
+    state.todos.find(element => element.key === itemID),
+  );
+
+  return (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Details', {
+          text: itemToShow.text,
+          description: itemToShow.description,
+        })
+      }>
+      <Text style={styles.item}>{itemToShow.text}</Text>
+    </TouchableOpacity>
+  );
 };
 
 export default TodoItem;
@@ -17,8 +28,8 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderColor: '#bbb',
     borderWidth: 1,
-    borderStyle: "dashed",
+    borderStyle: 'dashed',
     borderRadius: 1,
     borderRadius: 10,
-  }
+  },
 });
