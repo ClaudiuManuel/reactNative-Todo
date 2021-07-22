@@ -7,7 +7,7 @@ export const addToDo = (text, description) => {
             text: text,
             description: description,
             key: (Math.random()*100).toString()
-        }
+        },
     }
 }
 
