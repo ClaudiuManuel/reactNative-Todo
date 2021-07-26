@@ -2,6 +2,7 @@ import {ADD_TODO} from '../constants/addTodoConst';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DELETE_TODO } from '../constants/removeTodoConst';
+import { actionType } from '../types/actionType';
 
 const persistConfig = {
   key: 'root',
@@ -17,12 +18,12 @@ const initialState = {
   ],
 };
 
-const addTodoReducer = (state = initialState, action) => {
+const addTodoReducer = (state = initialState, action: actionType) => {
   switch (action.type) {
     case ADD_TODO:
       return {
         ...state,
-        todos: state.todos.concat(action.payload),
+        todos: state.todos.concat(action.payload!),
       };
       case DELETE_TODO: {
         return {

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TextInput, Button} from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParams } from '../types/rootStackParams';
 
 const styles = StyleSheet.create({
   textField: {
@@ -17,16 +19,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const AddToDo = ({navigation, route}) => {
+type NavProp = StackNavigationProp<RootStackParams,'AddTodo'>;
+type Prop = {
+  navigation : NavProp,
+  route: {params: {submitHandler: Function}}
+}
+
+const AddToDo = ({navigation, route}: Prop) => {
   const [text, setText] = useState('');
   const [description, setDescription] = useState('');
   const {submitHandler} = route.params;
 
-  const changeHandler = val => {
+  const changeHandler = (val : string) => {
     setText(val);
   };
 
-  const changeDescrHandler = val => {
+  const changeDescrHandler = (val : string) => {
     setDescription(val);
   };
 

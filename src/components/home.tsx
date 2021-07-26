@@ -13,6 +13,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParams } from '../types/rootStackParams';
+import { RootState } from '../store';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,8 +69,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = props => {
-  const todos = useSelector(state => state.todos);
+type NavProp = StackNavigationProp<RootStackParams,'Home'>;
+type Prop = {
+  navigation : NavProp
+}
+
+const HomeScreen = ({navigation}: Prop) => {
+  const todos = useSelector((state:RootState) => state.todos);
   const dispatch = useDispatch();
   
   return (
@@ -85,7 +93,7 @@ const HomeScreen = props => {
           renderItem={({item}) => (
             <TodoItem
               itemID={item.key}
-              navigation={props.navigation}></TodoItem>
+              navigation={navigation}></TodoItem>
           )}
         />
       </View>
@@ -93,8 +101,8 @@ const HomeScreen = props => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() =>
-            props.navigation.navigate('AddTodo', {
-              submitHandler: (text, description) =>
+            navigation.navigate('AddTodo', {
+              submitHandler: (text: string , description: string) =>
                 dispatch(addToDo(text, description)),
             })
           }>
