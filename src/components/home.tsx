@@ -7,15 +7,15 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import {addToDo} from '../actions/addTodoAction';
+import {addToDo} from '../reducers/todoSlice';
 import TodoItem from './todoitem';
 import {useSelector, useDispatch} from 'react-redux';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParams } from '../types/rootStackParams';
-import { RootState } from '../store';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParams} from '../types/rootStackParams';
+import {RootState} from '../storeToolkit';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,15 +69,15 @@ const styles = StyleSheet.create({
   },
 });
 
-type NavProp = StackNavigationProp<RootStackParams,'Home'>;
+type NavProp = StackNavigationProp<RootStackParams, 'Home'>;
 type Prop = {
-  navigation : NavProp
-}
+  navigation: NavProp;
+};
 
 const HomeScreen = ({navigation}: Prop) => {
-  const todos = useSelector((state:RootState) => state.todos);
+  const todos = useSelector((state: RootState) => state.todoReducer.todos);
   const dispatch = useDispatch();
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -91,21 +91,14 @@ const HomeScreen = ({navigation}: Prop) => {
         <FlatList
           data={todos}
           renderItem={({item}) => (
-            <TodoItem
-              itemID={item.key}
-              navigation={navigation}></TodoItem>
+            <TodoItem itemID={item.key} navigation={navigation}></TodoItem>
           )}
         />
       </View>
       <View style={styles.addComponent}>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() =>
-            navigation.navigate('AddTodo', {
-              submitHandler: (text: string , description: string) =>
-                dispatch(addToDo(text, description)),
-            })
-          }>
+          onPress={() => navigation.navigate('AddTodo')}>
           <FontAwesomeIcon icon={faPlus} color={'coral'} size={22} />
         </TouchableOpacity>
         <Text style={styles.addItemText}>Add item</Text>

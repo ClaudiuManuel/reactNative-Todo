@@ -1,5 +1,5 @@
 export type RootStackParams = {
   Home: undefined;
-  AddTodo: {submitHandler: Function};
+  AddTodo: undefined;
   Details: {text: string; description: string};
 };

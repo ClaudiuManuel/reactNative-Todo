@@ -3,11 +3,11 @@ import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
-import {deleteToDo} from '../actions/deleteTodoAction';
+import { deleteToDo } from '../reducers/todoSlice';
 import {Todo} from '../types/todo';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParams} from '../types/rootStackParams';
-import {RootState} from '../store';
+import {RootState} from '../storeToolkit';
 
 type NavProp = StackNavigationProp<RootStackParams, 'Home'>;
 
@@ -18,7 +18,7 @@ type Prop = {
 
 const TodoItem = ({itemID, navigation}: Prop) => {
   const itemToShow: Todo = useSelector((state: RootState) =>
-    state.todos.find(element => element.key === itemID),
+    state.todoReducer.todos.find(element => element.key === itemID),
   )!;
 
   const dispatch = useDispatch();

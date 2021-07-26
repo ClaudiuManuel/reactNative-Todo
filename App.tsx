@@ -14,13 +14,14 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/components/home';
 import Details from './src/components/details';
 import {store, persistor} from './src/store';
+import {storeToolkit} from './src/storeToolkit'
 import {PersistGate} from 'redux-persist/integration/react';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <Provider store={storeToolkit}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator>

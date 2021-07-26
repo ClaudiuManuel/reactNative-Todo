@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TextInput, Button} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParams } from '../types/rootStackParams';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParams} from '../types/rootStackParams';
+import {useSelector, useDispatch} from 'react-redux';
+import {addToDo} from '../reducers/todoSlice';
+import {Todo} from '../types/todo';
 
 const styles = StyleSheet.create({
   textField: {
@@ -19,22 +22,21 @@ const styles = StyleSheet.create({
   },
 });
 
-type NavProp = StackNavigationProp<RootStackParams,'AddTodo'>;
+type NavProp = StackNavigationProp<RootStackParams, 'AddTodo'>;
 type Prop = {
-  navigation : NavProp,
-  route: {params: {submitHandler: Function}}
-}
+  navigation: NavProp;
+};
 
-const AddToDo = ({navigation, route}: Prop) => {
+const AddToDo = ({navigation}: Prop) => {
   const [text, setText] = useState('');
   const [description, setDescription] = useState('');
-  const {submitHandler} = route.params;
+  const dispatch = useDispatch();
 
-  const changeHandler = (val : string) => {
+  const changeHandler = (val: string) => {
     setText(val);
   };
 
-  const changeDescrHandler = (val : string) => {
+  const changeDescrHandler = (val: string) => {
     setDescription(val);
   };
 
@@ -52,7 +54,12 @@ const AddToDo = ({navigation, route}: Prop) => {
       />
       <Button
         onPress={() => {
-          submitHandler(text, description);
+          const newItem = {
+            text: text,
+            description: description,
+            key: (Math.random()*100).toString()
+          }
+          dispatch(addToDo(newItem));
           return navigation.goBack();
         }}
         title="Add"
