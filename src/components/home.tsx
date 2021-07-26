@@ -115,3 +115,4 @@ const HomeScreen = ({navigation}: Prop) => {
 export default HomeScreen;
 
 // creating a merge conflict
+//testing git workflow
