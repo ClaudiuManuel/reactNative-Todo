@@ -17,7 +17,11 @@ const styles = StyleSheet.create({
     },
 });
 
-const Details = ({ route }) => {
+type Prop = {
+    route: {params: {text: string, description: string}}
+}
+
+const Details = ({ route }: Prop) => {
     return (
         <View style={styles.container}>
             <Text style={styles.textField}>{route.params.text}</Text>

@@ -3,12 +3,23 @@ import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
-import { deleteToDo } from '../actions/deleteTodoAction';
+import {deleteToDo} from '../actions/deleteTodoAction';
+import {Todo} from '../types/todo';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParams} from '../types/rootStackParams';
+import {RootState} from '../store';
 
-const TodoItem = ({itemID, navigation}) => {
-  const itemToShow = useSelector(state =>
+type NavProp = StackNavigationProp<RootStackParams, 'Home'>;
+
+type Prop = {
+  itemID: string;
+  navigation: NavProp;
+};
+
+const TodoItem = ({itemID, navigation}: Prop) => {
+  const itemToShow: Todo = useSelector((state: RootState) =>
     state.todos.find(element => element.key === itemID),
-  );
+  )!;
 
   const dispatch = useDispatch();
 
@@ -42,7 +53,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 1,
-    borderRadius: 10,
+    // borderRadius: 10,
   },
   inner: {
     flex: 1,
