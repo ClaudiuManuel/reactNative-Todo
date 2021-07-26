@@ -13,9 +13,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParams } from '../types/rootStackParams';
-import { RootState } from '../store';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParams} from '../types/rootStackParams';
+import {RootState} from '../store';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,15 +69,15 @@ const styles = StyleSheet.create({
   },
 });
 
-type NavProp = StackNavigationProp<RootStackParams,'Home'>;
+type NavProp = StackNavigationProp<RootStackParams, 'Home'>;
 type Prop = {
-  navigation : NavProp
-}
+  navigation: NavProp;
+};
 
 const HomeScreen = ({navigation}: Prop) => {
-  const todos = useSelector((state:RootState) => state.todos);
+  const todos = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -91,9 +91,7 @@ const HomeScreen = ({navigation}: Prop) => {
         <FlatList
           data={todos}
           renderItem={({item}) => (
-            <TodoItem
-              itemID={item.key}
-              navigation={navigation}></TodoItem>
+            <TodoItem itemID={item.key} navigation={navigation}></TodoItem>
           )}
         />
       </View>
@@ -102,7 +100,7 @@ const HomeScreen = ({navigation}: Prop) => {
           style={styles.addButton}
           onPress={() =>
             navigation.navigate('AddTodo', {
-              submitHandler: (text: string , description: string) =>
+              submitHandler: (text: string, description: string) =>
                 dispatch(addToDo(text, description)),
             })
           }>
@@ -115,3 +113,5 @@ const HomeScreen = ({navigation}: Prop) => {
 };
 
 export default HomeScreen;
+
+// creating a merge conflict
